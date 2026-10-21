@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Production Modular Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=21">
+  <link rel="stylesheet" href="style.css?v=22">
 </head>
 <body>
 
@@ -48,8 +48,6 @@
           <option value="rain">Soft Rain</option>
         </select>
       </div>
-      <button class="btn btn-outline btn-sm" id="btn-sample-tech" type="button">+ Sample Tech Spec</button>
-      <button class="btn btn-outline btn-sm" id="btn-sample-email" type="button">+ Sample Jargon Email</button>
       <button class="btn btn-outline btn-sm" id="btn-clear-workspace" type="button">Clear Workspace</button>
     </div>
   </header>
@@ -77,6 +75,15 @@
           <button class="mode-tab active" id="domain-mode-auto" type="button">🤖 ML Suggest</button>
           <button class="mode-tab" id="domain-mode-work" type="button">💼 Force Work</button>
           <button class="mode-tab" id="domain-mode-personal" type="button">🏠 Force Personal</button>
+        </div>
+      </div>
+
+      <!-- Commercial Quick Presets Bar -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; margin-bottom:0.25rem;">
+        <label style="font-size:0.75rem; color:var(--text-muted);">Quick Presets:</label>
+        <div style="display:flex; gap:0.45rem;">
+          <button class="btn-clear" id="btn-sample-tech" type="button" style="font-size:0.72rem; color:var(--sage-primary); font-weight:700;">📋 Architecture Spec</button>
+          <button class="btn-clear" id="btn-sample-email" type="button" style="font-size:0.72rem; color:var(--slate-blue); font-weight:700;">📨 Corporate Memo</button>
         </div>
       </div>
 
@@ -192,7 +199,7 @@
           <span class="time-chip" id="done-count-badge">0 Done</span>
         </div>
         <ul class="accomplishment-list" id="accomplishment-items-list">
-          <li style="color:var(--text-muted); font-size:0.78rem; list-style:none;">Click any calendar date button above to open its Day Page.</li>
+          <li style="color:var(--text-muted); font-size:0.78rem; list-style:none;">Click any calendar date button above to view accomplishments or open the Day Page.</li>
         </ul>
       </div>
 
@@ -238,7 +245,7 @@
             <span class="time-chip" id="modal-done-count">0 Completed</span>
           </div>
           <ul id="modal-accomplishment-list" style="list-style:none; display:flex; flex-direction:column; gap:0.4rem; max-height:180px; overflow-y:auto; padding-right:0.25rem;">
-            <!-- Injected by script -->
+            <!-- Injected by app.js -->
           </ul>
 
           <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.35rem;">
