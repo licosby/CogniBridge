@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CogniBridge Enterprise — HCAI Workload Orchestrator</title>
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-card: #131b2e;
+      --bg-subtle: #1e293b;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Enterprise Navigation Header */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      color: var(--bg-base);
+      font-weight: 900;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+
+    .header-pills {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      border: 1px solid var(--border);
+      background: var(--bg-subtle);
+    }
+
+    .pill-accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* Pitch Ribbon for Boss/Investors */
+    .pitch-banner {
+      background: linear-gradient(90deg, #1e1b4b, #0f172a);
+      border-bottom: 1px solid #4338ca;
+      padding: 0.6rem 2rem;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #c7d2fe;
+    }
+
+    /* Main Application Grid */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 320px 1fr 340px;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-header {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+
+    /* Session Controller */
+    .session-timer {
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-align: center;
+      color: var(--accent);
+      text-shadow: 0 0 15px var(--accent-glow);
+      font-variant-numeric: tabular-nums;
+      margin: 0.5rem 0;
+    }
+
+    .mode-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      background: var(--bg-subtle);
+      padding: 0.25rem;
+      border-radius: 8px;
+    }
+
+    button {
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      transition: all 0.15s ease-in-out;
+    }
+
+    button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .mode-btn {
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.4rem;
+    }
+
+    .mode-btn.active {
+      background: var(--bg-card);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .btn-action {
+      background: var(--accent);
+      color: var(--bg-base);
+      width: 100%;
+    }
+    .btn-action:hover { background: #0284c7; color: #fff; }
+
+    .btn-ghost {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+    .btn-ghost:hover { background: #334155; }
+
+    .btn-danger-soft {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+    .btn-danger-soft:hover { background: var(--danger); color: #fff; }
+
+    /* Workload Orchestration Engine */
+    .task-input-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    input[type="text"], select {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    input[type="text"]:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .task-stack {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+
+    .task-node {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .task-node-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .subtask-group {
+      margin-left: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .subtask-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Explainability & Cognitive Load Gauge */
+    .load-bar-container {
+      height: 10px;
+      background: var(--bg-base);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .load-bar-fill {
+      height: 100%;
+      width: 20%;
+      background: var(--success);
+      transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .inspector-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .audit-terminal {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .audit-item {
+      border-bottom: 1px dashed #1e293b;
+      padding-bottom: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pitch-banner">
+    <span><strong>Enterprise Presentation Mode:</strong> Standalone SaaS Architecture</span>
+    <span>Target Acquisition Valuation: <strong>$1,250,000</strong> (10x ARR Multiple)</span>
+  </div>
+
+  <header>
+    <div class="brand-group">
+      <div class="brand-logo">C</div>
+      <div>
+        <h1 style="font-size: 1.15rem; font-weight: 700;">CogniBridge Hub Enterprise</h1>
+        <small style="color: var(--text-muted)">Human-Centered AI Cognitive Load Governor</small>
+      </div>
+    </div>
+    <div class="header-pills">
+      <div class="pill pill-accent">● Zero Hardware Needed</div>
+      <div class="pill">HCAI Pillars 1–5 Audited</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Column 1: Executive Focus Engine -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>Focus Controller</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Pillar 1: Human Agency</span>
+      </div>
+
+      <div class="mode-selector">
+        <button class="mode-btn active" id="btn-mode-sprint" onclick="setSessionMode('sprint', 25)">Sprint (25m)</button>
+        <button class="mode-btn" id="btn-mode-deep" onclick="setSessionMode('deep', 50)">Deep (50m)</button>
+        <button class="mode-btn" id="btn-mode-recovery" onclick="setSessionMode('recovery', 10)">Rest (10m)</button>
+      </div>
+
+      <div class="session-timer" id="session-clock">25:00</div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn-action" id="btn-timer-trigger" onclick="toggleTimer()">Initialize Sprint</button>
+        <button class="btn-ghost" onclick="resetTimer()">Reset</button>
+      </div>
+
+      <div class="inspector-box">
+        <strong style="color: var(--text-main); display: block; margin-bottom: 0.25rem;">Active Focus Guardrail:</strong>
+        <p id="guardrail-desc">Notifications suppressed. Session pacing calibrated to baseline cognitive endurance.</p>
+      </div>
+    </section>
+
+    <!-- Column 2: Cognitive Deconstruction -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>Workload Decomposition Engine</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Pillar 4: Safety & Error Prevention</span>
+      </div>
+
+      <div class="task-input-box">
+        <input type="text" id="input-task-name" placeholder="Enter high-friction deliverable (e.g., Audit Q3 Financials)...">
+        <div style="display: flex; gap: 0.5rem;">
+          <select id="select-friction-level">
+            <option value="1">Low Complexity (Routine Analysis)</option>
+            <option value="2" selected>Medium Complexity (Multi-System Context)</option>
+            <option value="3">High Complexity (High-Stakes Architecture)</option>
+          </select>
+          <button class="btn-action" onclick="deconstructWorkload()" style="width: auto; white-space: nowrap;">Deconstruct Task</button>
+        </div>
+      </div>
+
+      <ul class="task-stack" id="task-stack-container" aria-label="Active Tasks">
+        <!-- Injected via prototype engine -->
+      </ul>
+    </section>
+
+    <!-- Column 3: HCAI Telemetry & Explainability -->
+    <section class="panel">
+      <div class="panel-header">
+        <span>HCAI Transparency Core</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">Pillar 2: Explainability</span>
+      </div>
+
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+          <span>Predicted Cognitive Saturation</span>
+          <strong id="load-val">24%</strong>
+        </div>
+        <div class="load-bar-container">
+          <div class="load-bar-fill" id="load-bar"></div>
+        </div>
+      </div>
+
+      <div class="inspector-box">
+        <strong style="color: var(--text-main); display: block; margin-bottom: 0.25rem;">Why this score? (Explainable Metric)</strong>
+        <p id="explainability-text">Cognitive saturation calculated from 1 pending high-stakes milestone and 0 context-switching alerts.</p>
+      </div>
+
+      <div class="panel-header" style="border: none; padding-bottom: 0;">
+        <span style="font-size: 0.85rem;">Audit & Compliance Log</span>
+        <span style="font-size: 0.75rem; color: var(--accent);">Pillar 3: Data Governance</span>
+      </div>
+      <div class="audit-terminal" id="audit-terminal">
+        <div class="audit-item">[System Ready] Local state encrypted in memory.</div>
+        <div class="audit-item">[Privacy Guard] Zero third-party telemetry enabled.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let durationSeconds = 25 * 60;
+    let remainingSeconds = 25 * 60;
+    let isRunning = false;
+    let timerRef = null;
+
+    let workloadQueue = [
+      {
+        id: 101,
+        title: "Enterprise Pitch Deck & Financial Model Validation",
+        level: 2,
+        steps: [
+          { name: "Verify B2B TAM/SAM calculation", done: true },
+          { name: "Benchmark SaaS gross margin (85%+)", done: false },
+          { name: "Finalize HCAI governance compliance checklist", done: false }
+        ]
+      }
+    ];
+
+    function updateClockDisplay() {
+      const mins = Math.floor(remainingSeconds / 60);
+      const secs = remainingSeconds % 60;
+      document.getElementById('session-clock').textContent = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('btn-timer-trigger');
+      if (isRunning) {
+        clearInterval(timerRef);
+        isRunning = false;
+        btn.textContent = "Resume Sprint";
+        btn.className = "btn-action";
+        logAudit("Session paused by human operator (Agency preserved).");
+      } else {
+        isRunning = true;
+        btn.textContent = "Pause Sprint";
+        btn.className = "btn-ghost";
+        logAudit("Focus Sprint initiated. Distraction blocker engaged.");
+        timerRef = setInterval(() => {
+          if (remainingSeconds > 0) {
+            remainingSeconds--;
+            updateClockDisplay();
+          } else {
+            clearInterval(timerRef);
+            isRunning = false;
+            btn.textContent = "Initialize Sprint";
+            btn.className = "btn-action";
+            logAudit("Sprint completed safely. Break cycle recommended.");
+            alert("Sprint milestone reached. Initiating recovery guidance.");
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerRef);
+      isRunning = false;
+      remainingSeconds = durationSeconds;
+      const btn = document.getElementById('btn-timer-trigger');
+      btn.textContent = "Initialize Sprint";
+      btn.className = "btn-action";
+      updateClockDisplay();
+      logAudit("Session clock reset by human command.");
+    }
+
+    function setSessionMode(modeKey, minutes) {
+      document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-mode-${modeKey}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      durationSeconds = minutes * 60;
+      remainingSeconds = durationSeconds;
+      resetTimer();
+
+      const descriptors = {
+        sprint: "Sprint Mode: High-velocity execution targeting single sub-milestones.",
+        deep: "Deep Mode: Protected cognition buffer for architectural tasks.",
+        recovery: "Recovery Mode: Cognitive reset cycle to reduce mental fatigue."
+      };
+      document.getElementById('guardrail-desc').textContent = descriptors[modeKey] || "";
+      calculateLoad();
+      logAudit(`Mode calibrated to: ${modeKey.toUpperCase()} (${minutes} min session).`);
+    }
+
+    function deconstructWorkload() {
+      const taskInput = document.getElementById('input-task-name');
+      const complexity = parseInt(document.getElementById('select-friction-level').value, 10);
+      const text = taskInput.value.trim();
+
+      if (!text) return;
+
+      const blueprintLibraries = {
+        1: ["Collate source assets", "Perform core update", "Log completion verification"],
+        2: ["Clarify technical scope", "Isolate core deliverable dependencies", "Draft prototype iteration", "Verify against stakeholder requirements"],
+        3: ["Map system boundary conditions", "Conduct risk & security evaluation", "Build MVP core logic", "Execute automated edge-case validation", "Prepare enterprise briefing document"]
+      };
+
+      const generatedSteps = (blueprintLibraries[complexity] || blueprintLibraries[2]).map(stepName => ({
+        name: stepName,
+        done: false
+      }));
+
+      const newWorkNode = {
+        id: Date.now(),
+        title: text,
+        level: complexity,
+        steps: generatedSteps
+      };
+
+      workloadQueue.push(newWorkNode);
+      taskInput.value = "";
+      renderWorkStack();
+      calculateLoad();
+      logAudit(`Deliverable parsed: "${text}". Decomposed into ${generatedSteps.length} milestones.`);
+    }
+
+    function toggleMilestone(workId, stepIdx) {
+      const item = workloadQueue.find(w => w.id === workId);
+      if (item && item.steps[stepIdx]) {
+        item.steps[stepIdx].done = !item.steps[stepIdx].done;
+        renderWorkStack();
+        calculateLoad();
+        logAudit(`Milestone updated on task #${workId}.`);
+      }
+    }
+
+    function dropWorkItem(workId) {
+      workloadQueue = workloadQueue.filter(w => w.id !== workId);
+      renderWorkStack();
+      calculateLoad();
+      logAudit(`Task #${workId} cleared by human operator.`);
+    }
+
+    function calculateLoad() {
+      let frictionScore = 0;
+      let totalMilestones = 0;
+      let pendingMilestones = 0;
+
+      workloadQueue.forEach(item => {
+        item.steps.forEach(st => {
+          totalMilestones++;
+          if (!st.done) {
+            pendingMilestones++;
+            frictionScore += (item.level * 9);
+          }
+        });
+      });
+
+      if (durationSeconds > 35 * 60) frictionScore += 12;
+
+      const normalizedPct = Math.min(Math.max(Math.round((frictionScore / 75) * 100), 10), 98);
+      const bar = document.getElementById('load-bar');
+      const val = document.getElementById('load-val');
+      const explain = document.getElementById('explainability-text');
+
+      bar.style.width = `${normalizedPct}%`;
+      val.textContent = `${normalizedPct}%`;
+
+      if (normalizedPct > 70) {
+        bar.style.backgroundColor = "var(--danger)";
+        explain.textContent = `High risk of cognitive friction (${normalizedPct}%). ${pendingMilestones} pending milestones detected. Recommending task delegation or session pacing.`;
+      } else if (normalizedPct > 40) {
+        bar.style.backgroundColor = "var(--warning)";
+        explain.textContent = `Balanced cognitive expenditure (${normalizedPct}%). Focus endurance is stable across ${pendingMilestones} active steps.`;
+      } else {
+        bar.style.backgroundColor = "var(--success)";
+        explain.textContent = `Low mental resistance (${normalizedPct}%). Work queue is clear of multi-tier context bottlenecks.`;
+      }
+    }
+
+    function logAudit(msg) {
+      const container = document.getElementById('audit-terminal');
+      const d = new Date();
+      const timeStr = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}`;
+      const el = document.createElement('div');
+      el.className = 'audit-item';
+      el.textContent = `[${timeStr}] ${msg}`;
+      container.prepend(el);
+    }
+
+    function renderWorkStack() {
+      const container = document.getElementById('task-stack-container');
+      container.innerHTML = "";
+
+      workloadQueue.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'task-node';
+
+        const subHtml = item.steps.map((st, i) => `
+          <label class="subtask-row">
+            <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleMilestone(${item.id}, ${i})">
+            <span style="${st.done ? 'text-decoration: line-through; opacity: 0.5;' : ''}">${st.name}</span>
+          </label>
+        `).join('');
+
+        li.innerHTML = `
+          <div class="task-node-header">
+            <strong style="font-size: 0.95rem;">${item.title}</strong>
+            <button class="btn-danger-soft" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="dropWorkItem(${item.id})">Drop</button>
+          </div>
+          <div class="subtask-group">
+            ${subHtml}
+          </div>
+        `;
+        container.appendChild(li);
+      });
+    }
+
+    // Run on startup
+    updateClockDisplay();
+    renderWorkStack();
+    calculateLoad();
+  </script>
+</body>
+</html>

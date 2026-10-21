@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CogniBridge Hub — Enterprise Executive Function & Accomplishment Engine</title>
+
+  <!-- Dyslexia-Optimized Typography (Lexend) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Production Modular Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=21">
+</head>
+<body>
+
+  <!-- Top Governance & Runtime Ribbon -->
+  <aside class="utility-ribbon" aria-label="System Governance and Runtime Status">
+    <div class="ribbon-brand">
+      <span class="pulse-indicator"></span>
+      <span>Runtime Engine: <strong>Reverse Accomplishment Calendar • Direct Date Buttons ($0 Compute)</strong></span>
+    </div>
+    <div class="ribbon-tags">
+      <span class="badge-tag">Zero Cloud Egress</span>
+      <span class="badge-tag">Client-Side Memory Archive</span>
+      <span class="badge-tag">HCAI Pillars 1–5 Audited</span>
+    </div>
+  </aside>
+
+  <!-- Calm Application Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-avatar" aria-hidden="true">C</div>
+      <div class="brand-text">
+        <h1>CogniBridge Hub</h1>
+        <p>Enterprise Executive Function & Reverse Accomplishment Engine</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Ambient Focus Soundscape -->
+      <div class="soundscape-bar">
+        <span>🎧 Focus Sound:</span>
+        <select id="audio-preset">
+          <option value="off">Off (Silent)</option>
+          <option value="pink">Calming Pink Noise</option>
+          <option value="rain">Soft Rain</option>
+        </select>
+      </div>
+      <button class="btn btn-outline btn-sm" id="btn-sample-tech" type="button">+ Sample Tech Spec</button>
+      <button class="btn btn-outline btn-sm" id="btn-sample-email" type="button">+ Sample Jargon Email</button>
+      <button class="btn btn-outline btn-sm" id="btn-clear-workspace" type="button">Clear Workspace</button>
+    </div>
+  </header>
+
+  <!-- Main Three-Column Enterprise Grid -->
+  <main class="workspace-grid">
+    
+    <!-- Column 1: Ingestion & Salience Inspector -->
+    <section class="card" aria-labelledby="ingestion-heading">
+      <div class="card-header">
+        <h2 id="ingestion-heading">Document Ingestion</h2>
+        <span class="sub-badge" id="detected-intent-badge">Awaiting Input</span>
+      </div>
+
+      <p class="description-text">
+        Type or paste technical specs, emails, or personal tasks. The semantic engine classifies content into <strong>Work</strong> vs. <strong>Personal</strong>, extracting action steps or filing away passive corporate memos.
+      </p>
+
+      <!-- Explicit Human Agency Selector for Domain -->
+      <div>
+        <label class="section-label" style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.35rem;">
+          Classification Authority (Pillar 1: Human Agency):
+        </label>
+        <div class="granularity-bar" id="ingest-domain-selector">
+          <button class="mode-tab active" id="domain-mode-auto" type="button">🤖 ML Suggest</button>
+          <button class="mode-tab" id="domain-mode-work" type="button">💼 Force Work</button>
+          <button class="mode-tab" id="domain-mode-personal" type="button">🏠 Force Personal</button>
+        </div>
+      </div>
+
+      <textarea id="raw-input" rows="7" placeholder="Paste unstructured technical requirements, executive emails, or personal tasks here...">Tomorrow at 3pm meet with investors. Clean up the css file by 12 pm Thursday. Doctors appointment at 8am Friday.</textarea>
+
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn btn-sage" id="btn-ingest-doc" style="flex:1;">+ Ingest & Classify</button>
+        <button class="btn btn-outline btn-sm" id="btn-clear-input">Clear</button>
+      </div>
+
+      <div>
+        <label class="section-label" style="display:block; font-size:0.78rem; font-weight:600; margin-bottom:0.3rem;">
+          Token Salience & Jargon Map (Click words to decrypt):
+        </label>
+        <div class="heatmap-canvas" id="attention-map">
+          Ready for document ingestion...
+        </div>
+      </div>
+
+      <!-- Plain-English Jargon Decryptor -->
+      <div class="jargon-tooltip-card" id="jargon-card">
+        <strong>💡 Dynamic Jargon Decryptor:</strong>
+        <span id="jargon-text">Click any highlighted term above to inspect its real-time plain-English translation.</span>
+      </div>
+    </section>
+
+    <!-- Column 2: Dual Mode - Task Workflow & Interactive Filing Cabinet -->
+    <section class="card" aria-labelledby="workbench-heading">
+      <div class="card-header">
+        <h2 id="workbench-heading">Workspace & Activity Feed</h2>
+        <div class="granularity-bar" style="margin:0;">
+          <button class="mode-tab active" id="tab-view-tasks">Tasks & Calendar</button>
+          <button class="mode-tab" id="tab-view-cabinet">Filing Cabinet <span class="badge-tag" id="cabinet-badge-count">0</span></button>
+        </div>
+      </div>
+
+      <!-- Sub-View 1: TASK WORKFLOW VIEW -->
+      <div id="view-tasks-container" style="display:flex; flex-direction:column; gap:0.85rem;">
+        
+        <!-- Work vs Personal Segmented Filter -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="granularity-bar" style="margin:0; flex:1; max-width:340px;">
+            <button class="mode-tab active" id="filter-task-all">See All</button>
+            <button class="mode-tab" id="filter-task-work">Work Tasks</button>
+            <button class="mode-tab" id="filter-task-personal">Personal Tasks</button>
+          </div>
+          <button class="btn-clear" id="btn-collapse-all-dossiers" style="font-size:0.75rem;">Toggle Collapse All</button>
+        </div>
+
+        <!-- Momentum Progress -->
+        <div class="momentum-container">
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem;">
+            <span>Cumulative Task Progress</span>
+            <strong id="momentum-label" style="color:var(--sage-primary);">0% Completed</strong>
+          </div>
+          <div class="momentum-meter">
+            <div class="momentum-fill" id="momentum-bar"></div>
+          </div>
+        </div>
+
+        <!-- Focus Body Double -->
+        <div class="body-double-card" id="body-double-box">
+          <div class="body-double-header">
+            <span>🎯 FOCUS &quot;BODY DOUBLE&quot; (TOP ACTIVE STEP)</span>
+            <span class="time-chip" id="bd-status-tag">Active</span>
+          </div>
+          <div class="focus-isolate-task" id="bd-task-text">
+            No pending tasks. Ingest a document or check history below.
+          </div>
+        </div>
+
+        <!-- Task Dossier Feed -->
+        <div id="dossier-feed-container" style="display:flex; flex-direction:column; gap:0.85rem; max-height:460px; overflow-y:auto; padding-right:0.25rem;">
+          <!-- Dynamically injected task dossiers -->
+        </div>
+      </div>
+
+      <!-- Sub-View 2: INTERACTIVE FILING CABINET VIEW -->
+      <div id="view-cabinet-container" style="display:none; flex-direction:column; gap:0.85rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <input type="text" id="cabinet-search" placeholder="Search saved emails, memos, and policies..." style="flex:1; padding:0.45rem 0.75rem; font-size:0.82rem;">
+        </div>
+
+        <div id="cabinet-list-container" style="display:flex; flex-direction:column; gap:0.85rem; max-height:560px; overflow-y:auto; padding-right:0.25rem;">
+          <!-- Dynamically injected filing cabinet cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: Reverse Accomplishment Calendar & XAI Telemetry -->
+    <section class="card" aria-labelledby="telemetry-heading">
+      <div class="card-header">
+        <h2 id="telemetry-heading">Accomplishment Calendar</h2>
+        <span class="sub-badge" id="cal-selected-label">Today</span>
+      </div>
+
+      <!-- Reverse "Done Log" Calendar Module (Dates act directly as buttons) -->
+      <div class="calendar-wrapper">
+        <div class="calendar-nav">
+          <button class="btn-clear" id="cal-prev-month" style="font-size:0.9rem; font-weight:bold;" title="Previous Month">◀</button>
+          <strong id="cal-month-year" style="font-size:0.88rem;">Month Year</strong>
+          <button class="btn-clear" id="cal-next-month" style="font-size:0.9rem; font-weight:bold;" title="Next Month">▶</button>
+        </div>
+        <div class="calendar-grid" id="calendar-days-grid" role="grid" aria-label="Accomplishment Dates">
+          <!-- Calendar Days Injected by script -->
+        </div>
+      </div>
+
+      <!-- Historical Accomplishment Ledger for Selected Day -->
+      <div class="accomplishment-docket">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--sage-dark);" id="done-log-header">What You Completed:</span>
+          <span class="time-chip" id="done-count-badge">0 Done</span>
+        </div>
+        <ul class="accomplishment-list" id="accomplishment-items-list">
+          <li style="color:var(--text-muted); font-size:0.78rem; list-style:none;">Click any calendar date button above to open its Day Page.</li>
+        </ul>
+      </div>
+
+      <!-- XAI Telemetry -->
+      <div class="telemetry-grid">
+        <div class="metric-card">
+          <span class="metric-title">ML Model State</span>
+          <strong class="metric-value" id="val-ml-state" style="font-size:0.95rem; color:var(--sage-primary);">Online Trained</strong>
+        </div>
+        <div class="metric-card">
+          <span class="metric-title">Friction Score</span>
+          <strong class="metric-value" id="val-friction">0 / 100</strong>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.25rem;">
+        <span style="font-size:0.75rem; font-weight:600;">Active Learning & Audit Ledger</span>
+        <button class="btn-clear" id="btn-clear-log">Clear</button>
+      </div>
+      <div class="ledger-terminal" id="audit-log">
+        <div class="ledger-row">[System Boot] CogniBridge Hub Initialized.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Full-Page Day Dossier & Memory Archive Modal -->
+  <div class="day-modal-overlay" id="day-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-day-title">
+    <div class="day-modal-container">
+      <div class="day-modal-header">
+        <div>
+          <h2 id="modal-day-title" style="font-size:1.15rem; font-weight:700;">Day Dossier</h2>
+          <small style="color:var(--text-muted); font-size:0.75rem;">Reverse Accomplishment Archive & Date-Bound Artifact Vault</small>
+        </div>
+        <button class="btn btn-outline btn-sm" id="btn-close-day-modal">Close [✕]</button>
+      </div>
+      
+      <div class="day-modal-body">
+        <!-- Left: Completed Tasks & Day Notes -->
+        <div class="modal-section-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:0.95rem; font-weight:600; color:var(--sage-dark);">Accomplishments On This Date</h3>
+            <span class="time-chip" id="modal-done-count">0 Completed</span>
+          </div>
+          <ul id="modal-accomplishment-list" style="list-style:none; display:flex; flex-direction:column; gap:0.4rem; max-height:180px; overflow-y:auto; padding-right:0.25rem;">
+            <!-- Injected by script -->
+          </ul>
+
+          <div style="margin-top:0.5rem; display:flex; flex-direction:column; gap:0.35rem;">
+            <label style="font-size:0.78rem; font-weight:600; color:var(--text-main);">Personal Day Note / Memory Journal:</label>
+            <textarea id="modal-day-notes" rows="4" placeholder="Write any memories, details of how the day went, or reminders to look back on forever..."></textarea>
+            <button class="btn btn-sage btn-sm" id="btn-save-day-notes" style="align-self:flex-end;">Save Memory Note</button>
+          </div>
+        </div>
+
+        <!-- Right: Memory Artifact & Document Vault -->
+        <div class="modal-section-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:0.95rem; font-weight:600; color:var(--slate-blue);">Memory Vault (Scanned Cards & Documents)</h3>
+            <span class="time-chip" id="modal-artifact-count">0 Saved</span>
+          </div>
+
+          <p class="description-text" style="font-size:0.75rem;">
+            Upload scanned birthday cards, certificates, photos, or documents to store them permanently with this date.
+          </p>
+
+          <!-- Dropzone -->
+          <div class="file-dropzone" id="modal-file-dropzone">
+            <span style="font-size:1.5rem; display:block; margin-bottom:0.25rem;">📎</span>
+            <strong style="font-size:0.82rem; color:var(--text-main);">Click or Drag & Drop File to Store</strong>
+            <small style="display:block; color:var(--text-muted); font-size:0.7rem;">Supports JPG, PNG, WEBP, PDF (Stored in browser vault)</small>
+            <input type="file" id="modal-file-input" style="display:none;" accept="image/*,application/pdf">
+          </div>
+
+          <!-- Gallery Preview Grid -->
+          <div class="gallery-grid" id="modal-gallery-grid">
+            <!-- Uploaded thumbnails injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Linked to external clean app.js -->
+  <script src="app.js"></script>
+</body>
+</html>
